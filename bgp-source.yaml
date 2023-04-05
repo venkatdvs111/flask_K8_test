@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: bgp-source
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: bgp-source
+  template:
+    metadata:
+      labels:
+        app: bgp-source
+    spec:
+      containers:
+      - name: bgp-source
+        image: busybox
+        command: [ "/bin/sh", "-c", "sleep 86400" ]
+      volumeMounts:
+        - name: bgp-source-config
+          mountPath: /etc/calico/bgp/source
+      volumes:
+      - name: bgp-source-config
+        configMap:
+          name: bgp-source-config
+          items:
+          - key: node.cfg
+            path: node.cfg

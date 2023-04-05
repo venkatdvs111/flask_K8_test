@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flask-app-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: flask-app-container
+        image: flask-app-testing
+        args: ["10"]
+      restartPolicy: Never
+
+# kubectl get jobs
+# kublectl describe job flask-app

@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: flask-app-cron
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+      spec:
+        template:
+         spec:
+           containers:
+             - name: flask-app-container
+               image: flask-app-testing
+               imagePullPolicy: Never
+               args: ["10"]
+           restartPolicy: Never
+
+# kubectl apply -f kubernetes/cronjob.yaml
+# kubectl get cronjob
+# kubectl get jobs
+# kubectl describe cronjob flask-app-cron
+# kubectl delete cronjob flask-app-cron

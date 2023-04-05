@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: flask-app-replica
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app-replica
+  template:
+    metadata:
+      labels:
+        app: flask-app-replica
+    spec:
+      containers:
+      - name: flask-app-container
+        image: flask-app-testing
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 5000
+            protocol: TCP
+
+#  kubectl get rs
+#  kubectl describe replicaset.apps/flask-app
+#  kubectl delete pod 

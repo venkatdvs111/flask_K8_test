@@ -1,0 +1,265 @@
+minikube start 
+minikube dashboard 
+docker run --name test-flask -p 5000:5000 flask-app-testing
+minikube image load flask-app-testing
+kubectl apply -f kubernetes/flask_deployment.yaml
+to check      -- kubectl get deploy 
+to check pods -- kubectl get pod 
+kubectl logs flask-app-8569bc947b-cvxmg
+kubectl scale deployment flask-app --replicas = 3
+kubectl get svc
+kubectl get ing 
+replica sets - kubectl get rs  ,  kubectl describe replicaset.apps/flask-app , kubectl delete pod 
+name space - kubectl get pods --namespace=myapp
+daemon sets - kubectl get daemonsets , kubectl describe daemonset flask-app-daemonset
+minikube service flask-app-service --url
+kubectl get pod -o wide
+kubectl get pod flask-app-8569bc947b-7db4m --template '{{.status.podIP}}'    
+kubectl describe pod flask-app-8569bc947b-7db4m
+
+kubectl cp flask-app-749bfdc544-8j7zr:file.txt flask-app-749bfdc544-kts54:file.txt
+
+
+
+
+
+kubectl cp file.txt flask-app-6f8c57fb8f-2wmd5:file.txt
+
+kubectl cp flask-app-749bfdc544-8j7zr:file.txt file.txt
+
+
+kubectl exec flask-app-6f8c57fb8f-2wmd5 -- ls -la 
+
+kubectl exec -it flask-app-6f8c57fb8f-2wmd5 bash
+
+kubectl cp flask-app-749bfdc544-8j7zr:file.txt bill/file.txt 
+
+ls -l /mnt/data
+
+
+
+
+
+
+=================================================
+Estabilishing SSH into POD steps :
+-------------------------------------------------
+apt update
+apt upgrade
+apt install openssh-server
+service ssh status
+service ssh restart
+passwd root
+apt install nano
+apt install iproute2
+nano /etc/ssh/sshd_config --- chanage parameters
+=================================================
+
+
+
+
+kubectl exec -it flask-app--8577bdb8ff-brtqs bash   12  
+kubectl exec -it flask-app--8577bdb8ff-hhqs7 bash   4
+----------------------------------------------------
+
+scp lfile.txt root@172.17.0.12:/app/
+
+scp root@172.17.0.12:/app/app.py z
+
+scp lfile.txt root@172.17.0.12 root@172.17.0.4:/app/
+
+===========================================================================
+
+
+
+kubectl exec -it flask-app-8577bdb8ff-brtqs -c flask-app-container bash
+kubectl exec -it flask-app-8577bdb8ff-brtqs -c nginx1 bash
+hostname -i
+ip addr show
+
+
+docker exec -it 5dc71761cd94425a9b1ceb5eaaf8dfdb3ac42c93ccb368bffac0d23b0e8c0c41 bash 3
+docker exec -it 489e5869874a75b547d856c1cf12304a406f4e35a4649e3b8f4cf11029efec51 bash 2
+
+docker inspect 5dc71761cd94425a9b1ceb5eaaf8dfdb3ac42c93ccb368bffac0d23b0e8c0c41
+docker inspect 489e5869874a75b547d856c1cf12304a406f4e35a4649e3b8f4cf11029efec51
+
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test-flask 
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nginx1
+
+Pod to local:
+kubectl cp flask-app-8577bdb8ff-brtqs:/app/app.py local/app.py -c flask-app-container
+local to pod:
+kubectl cp local/localfile.txt flask-app-8577bdb8ff-brtqs:localfile -c nginx1
+
+
+
+
+
+
+
+
+
+
+
+
+
+minikube start --cni flannel
+minikube start --network-plugin=cni
+
+kubectl get nodes -o wide
+kubectl get pod --namespace=kube-flannel -o wide
+
+
+ minikube ssh -n minikube-m02
+ ip -4 a|grep inet
+ ip route
+ ip -br addr sh
+ bridge fdb show
+
+cat /etc/cni/net.d/10-flannel.conflist
+
+cat /run/flannel/subnet.env
+
+
+
+
+
+
+
+
+
+
+kubectl get pods -n kube-system
+minikube start --network-plugin=cni --cni=calico
+
+ minikube ssh -n minikube-m02
+
+
+ls -l calico.yaml
+
+sudo kubectl-calico node status
+route -n 
+ip route
+
+sudo tcpstat -i eth0 
+
+
+minikube profile list
+
+kubectl get node -o wide
+
+ minikube ssh -p cluster-b
+
+ kubectl --cluster=minikube get pods -A -o wide
+
+ sudo calicoctl node status
+
+====================================
+
+
+
+minikube profile list 
+ 
+ 
+
+kubectl get pods -o wide --namespace=kube-system
+
+netstat -rn
+
+traceroute 192.168.49.3
+
+ip addr show
+
+sudo tcpdump -i lo -c 2 -v
+
+cat /etc/bird/bird.conf
+
+
+kubectl get node -o wide
+kubectl get pods -o wide --namespace=kube-system
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+scp lo_traffic.pcap root@192.168.49.2 root@10.244.205.205:a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+kubectl --cluster=cluster-b apply -f https://docs.projectcalico.org/v3.25/manifests/calico.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+python -m SimpleHTTPServer 9000
+
+
+curl 192.168.49.2:9000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pod container1 to container 2:
+kubectl cp local flask-app-8577bdb8ff-brtqs:C2_local -c nginx1
